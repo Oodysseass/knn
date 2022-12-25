@@ -64,64 +64,37 @@ Knnresult* kNN(double *query, double *corpus, int m, int n, int d, int k)
     result->m = m;
     result->k = k;
 
-    double **querySqr = Hammard(query, query, m, d);
-    double *querySum = RowSum(querySqr, m, d);
-    double **corpusTrans = Transpose(corpus, m, d);
-    double **corpQuerMult = MatrixMultiplication(query, corpusTrans, m, d, d, m);
+    double* distanceMatrix = calculateDistance(query, corpus, m, n, d);
 
     return result;
 }
 
-double** Hammard(double **A, double **B, int rows, int cols)
+double* calculateDistance(double *query, double *corpus, int m, int n, int d)
 {
-    double** result = new double*[rows];
-    for (int i = 0; i < rows; i++)
-        result[i] = new double[cols];
+    double* result = new double[m * n];
 
-    for (int i = 0; i < rows; i++)
-        for (int j = 0; j < cols; j++)
-            result[i][j] = A[i][j] * B[i][j];
-    
-    return result;
-}
+    double* querySquared = new double[m * d];
+    std::copy(query, query + m * d, querySquared);
+    std::transform(querySquared, querySquared + m * d, querySquared, [](double x) { return x * x; });
 
-double* RowSum(double** A, int rows, int cols)
-{
-    double* result = new double[rows]();
+    double* querySummed = new double[m];
+    for (int i = 0; i < m; i++)
+        querySummed[i] = std::accumulate(querySquared + i * d, querySquared + (i + 1) * d, 0.0);
 
-    for (int i = 0; i < rows; i++)
-        for (int j = 0; j < cols; j++)
-            result[i] += A[i][j];
+    double* queryCorpus = new double[m * n];
+    cblas_dgemm(CblasRowMajor, CblasNoTrans, CblasTrans, m, n, d, 1.0, query, d, corpus, d, 0.0, queryCorpus, n);
 
-    return result;
-}
+    double* corpusSquared = new double[n * d];
+    std::copy(corpus, corpus + n * d, corpusSquared);
+    std::transform(corpusSquared, corpusSquared + n * d, corpusSquared, [](double x) { return x * x; });
 
-double** Transpose(double **A, int rows, int cols)
-{
-    double** result = new double*[cols];
-    for (int i = 0; i < cols; i++)
-        result[i] = new double[rows];
-    
-    for (int i = 0; i < rows; i++)
-        for (int j = 0; j < cols; j++)
-            result[j][i] = A[i][j];
-    
-    return result;
-}
+    double* corpusSummed = new double[n];
+    for (int i = 0; i < n; i++)
+        corpusSummed[i] = std::accumulate(corpusSquared+ i * d, corpusSquared + (i + 1) * d, 0.0);
 
-double** MatrixMultiplication(double **A, double **B, int rowsA, int colsA, int rowsB, int colsB)
-{
-    if (!(colsA == rowsB))
-    {
-        cout << "Not valid dimensions for matrix multiplication" << endl;
-        return NULL;
-    }
-
-    double** result = new double*[rowsA];
-    for (int i = 0; i < rowsA; i++)
-        result[i] = new double[colsB]();
-
-    for (int i = 0; i < rowsA
+    for (int i = 0; i < m; i++)
+        for (int j = 0; j < n; j++)
+            result[i * n + j] = sqrt(querySummed[i] - 2 * queryCorpus[i * n + j] + corpusSummed[j]);
 
     return result;
 }
