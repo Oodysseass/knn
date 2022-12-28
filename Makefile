@@ -1,11 +1,13 @@
 CC = mpic++
 CFLAGS = -O3
-LDFLAGS = -lcblas
+LDFLAGS = -lgsl -lgslcblas
 SOURCES = main.cpp
 EXECUTABLE = main
 
-$(EXECUTABLE):
-	$(CC) $(SOURCES) -o $@ $(CFLAGS) $(LDFLAGS) 
+all: $(EXECUTABLE)
+
+$(EXECUTABLE): $(SOURCES)
+	$(CC) $(SOURCES) $(CFLAGS) $(LDFLAGS) -o $@
 
 clean:
 	rm -f $(EXECUTABLE)
