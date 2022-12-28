@@ -27,14 +27,23 @@ int main(int argc, char* argv[])
         dataFile >> corpusPoints[i];
 
     // this is just temporary
-    int numOfQuery = 2;
+    int numOfQuery = 5;
     double* queryPoints = new double[numOfQuery * dimensions];
 
     for (int i = 0; i < numOfQuery * dimensions; i++)
         queryPoints[i] = corpusPoints[i];
     //
 
-    Knnresult* knnresult = kNN(queryPoints, corpusPoints, numOfQuery, numOfCorpus, dimensions, numNeighbors);
+    Knnresult knnresult = kNN(queryPoints, corpusPoints, numOfQuery, numOfCorpus, dimensions, numNeighbors);
+
+    for (int i = 0; i < numOfQuery; i++)
+    {
+        std::cout << "KNNs of point " << i << ":" << std::endl;
+        for (int j = 0; j < numNeighbors; j++)
+            std::cout << j << ": " << knnresult.nidx[i * numNeighbors + j] <<
+                ", Dist: " << knnresult.ndist[i * numNeighbors + j] << std::endl;
+        std::cout << "---------------" << std::endl;
+    }
 
     return 0;
 }
