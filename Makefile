@@ -1,8 +1,8 @@
 CC = mpic++
 CFLAGS = -O3
 LDFLAGS = -lgsl -lgslcblas
-SOURCES = main.cpp
-EXECUTABLE = main
+SOURCES = mainSequential.cpp
+EXECUTABLE = mainSeq
 
 all: $(EXECUTABLE)
 

@@ -27,7 +27,7 @@ int main(int argc, char* argv[])
         dataFile >> corpusPoints[i];
 
     // this is just temporary
-    int numOfQuery = 5;
+    int numOfQuery = numOfCorpus;
     double* queryPoints = new double[numOfQuery * dimensions];
 
     for (int i = 0; i < numOfQuery * dimensions; i++)
@@ -40,7 +40,7 @@ int main(int argc, char* argv[])
     {
         std::cout << "KNNs of point " << i << ":" << std::endl;
         for (int j = 0; j < numNeighbors; j++)
-            std::cout << j << ": " << knnresult.nidx[i * numNeighbors + j] <<
+            std::cout << j + 1 << ": " << knnresult.nidx[i * numNeighbors + j] <<
                 ", Dist: " << knnresult.ndist[i * numNeighbors + j] << std::endl;
         std::cout << "---------------" << std::endl;
     }
