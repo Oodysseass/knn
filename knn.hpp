@@ -77,5 +77,8 @@ Knnresult kNN(double *query, double *corpus, int m, int n, int d, int k)
         std::cout << std::endl;
     } */
 
+    delete distanceMatrix;
+    delete distanceCopy;
+
     return result;
 }
