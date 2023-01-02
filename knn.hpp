@@ -1,8 +1,5 @@
 #include <algorithm>
 #include <climits>
-
-#include <iomanip>
-
 #include "knnresult.hpp"
 #include "matrices.hpp"
 
@@ -70,15 +67,8 @@ Knnresult kNN(double *query, double *corpus, int m, int n, int d, int k)
         }
     }
 
-/*     for (int i = 0; i < m; i++)
-    {
-        for (int j = 0; j < n; j++)
-            std::cout << std::setfill(' ') << std::setw(8) << std::fixed << std::setprecision(2) << distanceMatrix[i * n + j] << " ";
-        std::cout << std::endl;
-    } */
-
-    delete distanceMatrix;
-    delete distanceCopy;
+    delete[] distanceMatrix;
+    delete[] distanceCopy;
 
     return result;
 }
