@@ -1,7 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include <string>
-#include "knn.hpp"
+#include "knn.h"
 
 
 int main(int argc, char* argv[])
