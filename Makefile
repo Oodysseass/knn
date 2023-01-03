@@ -1,13 +1,17 @@
 CC = mpic++
-CFLAGS = -O3
+CFLAGS = -c -O3
 LDFLAGS = -lgsl -lgslcblas
-SOURCES = mainSequential.cpp
+SOURCES = mainSequential.cpp knn.cpp
+OBJECTS = $(SOURCES:.cpp=.o)
 EXECUTABLE = mainSeq
 
 all: $(EXECUTABLE)
 
-$(EXECUTABLE): $(SOURCES)
-	$(CC) $(SOURCES) $(CFLAGS) $(LDFLAGS) -o $@
+$(EXECUTABLE): $(OBJECTS)
+	$(CC) $(OBJECTS) $(LDFLAGS) -o $@
+
+.cpp.o:
+	$(CC) $(CFLAGS) $< -o $@
 
 clean:
-	rm -f $(EXECUTABLE)
+	rm -f $(OBJECTS) $(EXECUTABLE)
