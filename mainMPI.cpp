@@ -2,7 +2,7 @@
 #include <fstream>
 #include <cstdlib>
 #include <mpi.h>
-#include "distrKNN.hpp"
+#include "knn.h"
 
 int main(int argc, char* argv[])
 {
