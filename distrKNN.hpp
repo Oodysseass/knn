@@ -113,6 +113,8 @@ Knnresult distrallkNN(double *query, int n, int totalPoints, int d, int k)
         compareResults(&result, &tempResult, n, k, indexConverter, averageSize);
     }
 
+    delete[] corpus;
+    delete[] incoming;
 
     return result;
 }

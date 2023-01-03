@@ -31,9 +31,9 @@ double* calculateDistance(double *query, double *corpus, int m, int n, int d)
         for (int j = 0; j < n; j++)
             result[i * n + j] = sqrt(querySummed[i] - 2 * queryCorpus[i * n + j] + corpusSummed[j]);
 
-    delete querySummed;
-    delete queryCorpus;
-    delete corpusSummed;
+    delete[] querySummed;
+    delete[] queryCorpus;
+    delete[] corpusSummed;
 
     return result;
 }
