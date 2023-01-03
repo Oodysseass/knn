@@ -41,8 +41,6 @@ double kthSmallest(double arr[], int l, int r, int k)
 Knnresult kNN(double *query, double *corpus, int m, int n, int d, int k)
 {
     Knnresult result = Knnresult(m, k);
-    result.nidx = new int[m * k];
-    result.ndist = new double[m * k];
     result.m = m;
     result.k = k;
 

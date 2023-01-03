@@ -48,8 +48,8 @@ int main(int argc, char* argv[])
         std::cout << "---------------" << std::endl;
     }
 
-    delete corpusPoints;
-    delete queryPoints;
+    delete[] corpusPoints;
+    delete[] queryPoints;
 
     return 0;
 }
