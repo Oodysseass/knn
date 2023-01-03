@@ -14,7 +14,10 @@ int main(int argc, char* argv[])
 
     std::ifstream dataFile(argv[1]);
     if (!dataFile)
+    {
         std::cout << "Error in opening of the file" << std::endl;
+        return 1;
+    }
 
     int numNeighbors = atoi(argv[2]);
     int numOfCorpus;
@@ -44,6 +47,9 @@ int main(int argc, char* argv[])
                 ", Dist: " << knnresult.ndist[i * numNeighbors + j] << std::endl;
         std::cout << "---------------" << std::endl;
     }
+
+    delete corpusPoints;
+    delete queryPoints;
 
     return 0;
 }
