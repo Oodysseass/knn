@@ -72,6 +72,7 @@ Knnresult kNN(double *query, double *corpus, int m, int n, int d, int k);
  * @param totalPoints the sum of all points each process has
  * @param d the dimensions of the points
  * @param k the amount of neighbors we want to find
+ * @return a struct with the results of query points of the current process
  */
 Knnresult distrallkNN(double *query, int n, int totalPoints, int d, int k);
 
