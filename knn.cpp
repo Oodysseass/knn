@@ -55,8 +55,10 @@ Knnresult kNN(double *query, double *corpus, int m, int n, int d, int k)
             kth = kthSmallest(distanceCopy, 0, n - 1, j + 1);
             auto it = std::find(distanceMatrix + i * n, distanceMatrix + (i + 1) * n, kth);
 
-            if (kth == result.ndist[i * k + j - 1])
+            if (kth == result.ndist[i * k + j - 1] && j != 0)
+            {
                 it = std::find(distanceMatrix + i * n + result.nidx[i * k + j - 1] + 1, distanceMatrix + (i + 1) * n, kth);
+            }
 
             result.nidx[i * k + j] = (it - distanceMatrix + i * n) % n;
             result.ndist[i * k + j] = kth;
@@ -126,7 +128,7 @@ Knnresult distrallkNN(double *query, int n, int totalPoints, int d, int k)
         }
 
         Knnresult tempResult = kNN(query, corpus, n, actualSize, d, k);
-        indexConverter--;
+        indexConverter = (selfTID - i + numTasks) % numTasks;
         compareResults(&result, &tempResult, n, k, indexConverter, averageSize);
     }
 
@@ -151,7 +153,7 @@ void compareResults(Knnresult *result, Knnresult *temp, int n, int k, int index,
             // fix indexes and resort
             else
             {
-                result->nidx[(i + 1) * k - 1] = temp->ndist[i * k + j] + index * coefficient;
+                result->nidx[(i + 1) * k - 1] = temp->nidx[i * k + j] + index * coefficient;
                 result->ndist[(i + 1) * k - 1] = temp->ndist[i * k + j];
                 quickSort(&result->ndist[i * k], 0, k - 1, &result->nidx[i * k]);
             }
