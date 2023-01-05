@@ -43,8 +43,9 @@ int main(int argc, char* argv[])
     {
         std::cout << "KNNs of point " << i << ":" << std::endl;
         for (int j = 0; j < numNeighbors; j++)
-            std::cout << j + 1 << ": " << knnresult.nidx[i * numNeighbors + j] <<
-                ", Dist: " << knnresult.ndist[i * numNeighbors + j] << std::endl;
+            std::cout << "Neighbor " << j + 1 << ": " << "ID: " <<
+                knnresult.nidx[i * numNeighbors + j] << ", Dist: " <<
+                knnresult.ndist[i * numNeighbors + j] << std::endl;
         std::cout << "---------------" << std::endl;
     }
 
