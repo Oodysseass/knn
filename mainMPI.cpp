@@ -48,9 +48,13 @@ int main(int argc, char* argv[])
     for (int i = 0; i < processNumPoints * dimensions; i++)
         dataFile >> points[i];
 
+    double start = MPI_Wtime();
     Knnresult myResult = distrallkNN(points, processNumPoints, numOfCorpus, dimensions, numNeighbors);
+    double end = MPI_Wtime();
+
     Knnresult overAll = Knnresult(numOfCorpus, numNeighbors);
 
+    double comStart = MPI_Wtime();
     if (selfTID == 0)
     {
         for (int i = 0; i < processNumPoints * numNeighbors; i++)
@@ -89,6 +93,7 @@ int main(int argc, char* argv[])
         MPI_Send(myResult.nidx, processNumPoints * numNeighbors, MPI_INT, 0, 1, MPI_COMM_WORLD);
         MPI_Send(myResult.ndist, processNumPoints * numNeighbors, MPI_DOUBLE, 0, 1, MPI_COMM_WORLD);
     }
+    double comEnd = MPI_Wtime();
 
     MPI_Finalize();
 
@@ -103,7 +108,10 @@ int main(int argc, char* argv[])
                     overAll.ndist[i * numNeighbors + j] << std::endl;
             std::cout << "---------------" << std::endl;
         }
+        std::cout << "Time needed for calculation: " << end - start << "s." << std::endl;
+        std::cout << "Time needed for gathering of results: " << comEnd - comStart << "s." << std::endl;
     }
+
 
     delete[] points;
 

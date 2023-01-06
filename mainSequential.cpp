@@ -1,6 +1,6 @@
 #include <iostream>
 #include <fstream>
-#include <string>
+#include <mpi.h>
 #include "knn.h"
 
 
@@ -37,7 +37,9 @@ int main(int argc, char* argv[])
         queryPoints[i] = corpusPoints[i];
     //
 
+    double start = MPI_Wtime();
     Knnresult knnresult = kNN(queryPoints, corpusPoints, numOfQuery, numOfCorpus, dimensions, numNeighbors);
+    double end = MPI_Wtime();
 
     for (int i = 0; i < numOfQuery; i++)
     {
@@ -48,6 +50,8 @@ int main(int argc, char* argv[])
                 knnresult.ndist[i * numNeighbors + j] << std::endl;
         std::cout << "---------------" << std::endl;
     }
+
+    std::cout << "Time needed: " << end - start << "s." << std::endl;
 
     delete[] corpusPoints;
     delete[] queryPoints;
