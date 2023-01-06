@@ -155,7 +155,25 @@ void compareResults(Knnresult *result, Knnresult *temp, int n, int k, int index,
             {
                 result->nidx[(i + 1) * k - 1] = temp->nidx[i * k + j] + index * coefficient;
                 result->ndist[(i + 1) * k - 1] = temp->ndist[i * k + j];
-                quickSort(&result->ndist[i * k], 0, k - 1, &result->nidx[i * k]);
+
+                // position new point on the right spot
+                int newIdx = k - 1;
+                int l = k - 2;
+                double tempDist;
+                int tempIdx;
+                while (result->ndist[i * k + newIdx] < result->ndist[i * k + l] && l > -1)
+                {
+                    tempDist = result->ndist[i * k + l];
+                    result->ndist[i * k + l] = result->ndist[i * k + newIdx];
+                    result->ndist[i * k + newIdx] = tempDist;
+
+                    tempIdx = result->nidx[i * k + l];
+                    result->nidx[i * k + l] = result->nidx[i * k + newIdx];
+                    result->nidx[i * k + newIdx] = tempIdx;
+
+                    newIdx--;
+                    l--;
+                }
             }
         }
     }
