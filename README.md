@@ -5,12 +5,12 @@
 <ul>
   <li>MPI library and mpic++ wrapper of compiler gcc. Can be installed by running:
   
-    <code>sudo apt-get install libopenmpi-dev</code>
+    sudo apt-get install libopenmpi-dev
     
   </li>
   <li>gsl/gsl_cblas library: needed for matrix calculations. Can be installed by running:
   
-    <code>sudo apt-get install libgsl-dev</code>
+    sudo apt-get install libgsl-dev
     
   </li>
 </ul>
