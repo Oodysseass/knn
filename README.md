@@ -1,5 +1,5 @@
 # KNN Algorithm with MPI
-<p>Implements kNN algorith both sequentially and with MPI for distributed systems.</p>
+Implements kNN algorith both sequentially and with MPI for distributed systems.
 
 <h2>Dependencies</h2>
 <ul>
@@ -16,19 +16,16 @@
 </ul>
 
 <h2>Running</h2>
-<p>Clone repo and run make</p>
+Clone repo and run make
 
-<p>fileProducer is used to produce random data sets to test the programm. Usage:</p>
+fileProducer is used to produce random data sets to test the programm. Usage:
 
   ./fileProducer <outputfilename> <numberOfPoints> <numberOfDimensions>
 
-<p>
 e.g.
   
   ./fileProducer data.txt 1000 100
 
-</p>
-<p>
 Produces a file with 1000 random points with 100 dimensions. The output file format (and the expected from the programm) is:
 
    <numberOfPoints> <numberOfDimensions>
@@ -38,13 +35,12 @@ Produces a file with 1000 random points with 100 dimensions. The output file for
    .
    .
    d1 d2 ... dn
-</p>
   
-<p>mainSeq is the sequential implementation of the algorithm and can be run like this:</p>
+mainSeq is the sequential implementation of the algorithm and can be run like this:
   
   ./mainSeq <dataFile> <numberOfNeighbors>
 
-<p>mainMPI is the distributed implementation of the algorithm and can be run like this:</p>
+mainMPI is the distributed implementation of the algorithm and can be run like this:
   
   mpirun -np <numberOfProcesses> ./mainMPI <dataFile> <numberOfNeighbors>
 
