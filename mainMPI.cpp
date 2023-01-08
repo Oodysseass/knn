@@ -99,14 +99,15 @@ int main(int argc, char* argv[])
 
     if (selfTID == 0)
     {
+        std::ofstream outputFile("mpiOutput.txt");
         for (int i = 0; i < numOfCorpus; i++)
         {
-            std::cout << "KNNs of point " << i << ":" << std::endl;
+            outputFile << "KNNs of point " << i << ":" << std::endl;
             for (int j = 0; j < numNeighbors; j++)
-                std::cout << "Neighbor " <<  j + 1 << ": " << "ID: " <<
+                outputFile << "Neighbor " <<  j + 1 << ": " << "ID: " <<
                     overAll.nidx[i * numNeighbors + j] << ", Dist: " <<
                     overAll.ndist[i * numNeighbors + j] << std::endl;
-            std::cout << "---------------" << std::endl;
+            outputFile << "---------------" << std::endl;
         }
         std::cout << "Time needed for calculation: " << end - start << "s." << std::endl;
         std::cout << "Time needed for gathering of results: " << comEnd - comStart << "s." << std::endl;
