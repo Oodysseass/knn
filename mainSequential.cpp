@@ -41,14 +41,15 @@ int main(int argc, char* argv[])
     Knnresult knnresult = kNN(queryPoints, corpusPoints, numOfQuery, numOfCorpus, dimensions, numNeighbors);
     double end = MPI_Wtime();
 
+    std::ofstream outputFile("seqOutput.txt");
     for (int i = 0; i < numOfQuery; i++)
     {
-        std::cout << "KNNs of point " << i << ":" << std::endl;
+        outputFile << "KNNs of point " << i << ":" << std::endl;
         for (int j = 0; j < numNeighbors; j++)
-            std::cout << "Neighbor " << j + 1 << ": " << "ID: " <<
+            outputFile << "Neighbor " << j + 1 << ": " << "ID: " <<
                 knnresult.nidx[i * numNeighbors + j] << ", Dist: " <<
                 knnresult.ndist[i * numNeighbors + j] << std::endl;
-        std::cout << "---------------" << std::endl;
+        outputFile << "---------------" << std::endl;
     }
 
     std::cout << "Time needed: " << end - start << "s." << std::endl;
