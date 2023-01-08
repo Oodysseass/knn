@@ -109,8 +109,8 @@ int main(int argc, char* argv[])
                     overAll.ndist[i * numNeighbors + j] << std::endl;
             outputFile << "---------------" << std::endl;
         }
-        std::cout << "Time needed for calculation: " << end - start << "s." << std::endl;
         std::cout << "Time needed for gathering of results: " << comEnd - comStart << "s." << std::endl;
+        std::cout << "Total time needed for calculation: " << end - start << "s." << std::endl;
     }
 
 

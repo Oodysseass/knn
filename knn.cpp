@@ -108,11 +108,16 @@ Knnresult distrallkNN(double *query, int n, int totalPoints, int d, int k)
     for (int i = 0; i < n * k; i++)
         result.nidx[i] += indexConverter * averageSize;
 
+    double start, end, delay = 0;
+
     for (int i = 1; i < numTasks; i++)
     {
         // making sure communication has ended
+        start = MPI_Wtime();
         MPI_Wait(&sendReq, &status);
         MPI_Wait(&recvReq, &status);
+        end = MPI_Wtime();
+        delay += end - start;
 
         temp = corpus;
         corpus = incoming;
@@ -131,6 +136,8 @@ Knnresult distrallkNN(double *query, int n, int totalPoints, int d, int k)
         indexConverter = (selfTID - i + numTasks) % numTasks;
         compareResults(&result, &tempResult, n, k, indexConverter, averageSize);
     }
+
+    std::cout << "Process " << selfTID << " wasted " << delay << "s on communication." << std::endl;
 
     delete[] corpus;
     delete[] incoming;
