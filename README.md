@@ -40,6 +40,10 @@ Produces a file with 1000 random points with 100 dimensions. The output file for
   <li>mainSeq is the sequential implementation of the algorithm and can be run like this:
   
     ./mainSeq <dataFile> <numberOfNeighbors>
+    
+  e.g.
+  
+    ./mainSeq data.txt 15
 
   </li>
   <li>mainMPI is the distributed implementation of the algorithm and can be run like this:
