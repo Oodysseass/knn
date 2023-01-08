@@ -29,13 +29,9 @@ int main(int argc, char* argv[])
     for (int i = 0; i < numOfCorpus * dimensions; i++)
         dataFile >> corpusPoints[i];
 
-    // this is just temporary
     int numOfQuery = numOfCorpus;
     double* queryPoints = new double[numOfQuery * dimensions];
-
-    for (int i = 0; i < numOfQuery * dimensions; i++)
-        queryPoints[i] = corpusPoints[i];
-    //
+    std::copy(corpusPoints, corpusPoints + numOfCorpus * dimensions, queryPoints);
 
     double start = MPI_Wtime();
     Knnresult knnresult = kNN(queryPoints, corpusPoints, numOfQuery, numOfCorpus, dimensions, numNeighbors);
